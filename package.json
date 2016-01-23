@@ -1,0 +1,31 @@
+{
+  "name": "openvjkit",
+  "version": "0.1.0",
+  "description": "VJing Toolkit in a browser",
+  "main": "server/main.js",
+  "scripts": {
+    "start": "node server/main.js",
+    "test": "testthething"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/espaciocasanave/openvjkit.git"
+  },
+  "keywords": [
+    "VJ",
+    "VJing",
+    "WebGL",
+    "WebAudio",
+    "WebMIDI"
+  ],
+  "author": "Sebastian E. Ferreyra Pons",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/espaciocasanave/openvjkit/issues"
+  },
+  "homepage": "https://github.com/espaciocasanave/openvjkit#readme",
+  "dependencies": {
+    "finalhandler": "^0.4.1",
+    "serve-static": "^1.10.2"
+  }
+}

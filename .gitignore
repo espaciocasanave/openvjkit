@@ -1,0 +1,6 @@
+public/js/
+node_modules
+server/cert.pem
+server/csr.pem
+server/key.csr
+server/key.pem
