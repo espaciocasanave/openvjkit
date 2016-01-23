@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Visuales</title>
+    <script type="text/javascript" src="jquery-1.8.0.min.js"></script>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        canvas {
+            background: black;
+        }
+    </style>
+
+</head>
+<body style="background-color: black;">
+<canvas id="visuals" width="800" height="600" style="display: block;"></canvas>
+<div id="imgs" style="display:none">
+    <img src="pics/arpa1.png">
+    <img src="pics/bailarin1.png">
+    <img src="pics/contrabajo1.png">
+    <img src="pics/guitarra1.png">
+    <img src="pics/mic1.png">
+    <img src="pics/percu1.png">
+    <img src="pics/piano1.png">
+    <img src="pics/saxo1.png">
+    <img src="pics/saxo2.png">
+    <img src="pics/trompeta1.png">
+    <img src="pics/violin1.png">
+</div>
+
+<div id="stars" style="display:none">
+    <img src="pics/star1.png">
+    <img src="pics/star2.png">
+    <img src="pics/star3.png">
+    <img src="pics/star4.png">
+</div>
+<div id="party" style="display:none">
+    <img src="pics/diablo.png">
+    <img src="pics/fa listo.png">
+    <img src="pics/calavera lista.png">
+    <img src="pics/cerveza.png">
+    <img src="pics/pacman angry.png">
+    <img src="pics/pacman fantasmita.png">
+    <img src="pics/fantasmita1.png">
+    <img src="pics/calavera2.png">
+    <img src="pics/fantasmita2.png">
+    <img src="pics/fantasmita3.png">
+    <img src="pics/neurona.png">
+</div>
+<div id="folk" style="display:none">
+    <img src="pics/atahualpa.jpg">
+    <img src="pics/baquetas-bombo.jpg">
+    <img src="pics/coyuyo.jpg">
+    <img src="pics/dali-salvador.jpg">
+    <img src="pics/lagorda.jpg">
+    <img src="pics/fa2.jpg">
+    <img src="pics/images.jpg">
+    <img src="pics/images.png">
+    <img src="pics/jacinto.jpg">
+    <img src="pics/leguero-tallado-40x50cm.gif">
+    <img src="pics/Mate.png">
+    <img src="pics/zoom3.jpg">
+</div>
+<div id="drugs" style="display:none">
+    <img src="pics/11-Hydroxy-THC-3D-balls.png">
+    <img src="pics/800px-lsd-2d-skeletal-formula-and-3d-models.png">
+    <img src="pics/060559-black-paint-splatter-icon-people-things-brain.png">
+    <img src="pics/7896404652_6dd7058c57_o.png">
+    <img src="pics/c9f968_571e0e36469f4fc085f5cad9b05e61bb.png">
+    <img src="pics/cocaine.png">
+    <img src="pics/images%20(1).jpg">
+    <img src="pics/Sadfddd.png">
+    <img src="pics/sex-female-512.png">
+    <img src="pics/sex-male-512.png">
+    <img src="pics/spades-01-512.png">
+    <img src="pics/speedo-512.png">
+    <img src="pics/THC-IMAGE.png">
+    <img src="pics/tripadvisor-icon.png">
+    <img src="pics/turn-on-safe-sex-icon3_bigger.png">
+    <img src="pics/condon1.png">
+    <img src="pics/condon2.png">
+    <img src="pics/condon3.png">
+    <img src="pics/condon4.png">
+</div>
+<div id="folk2" style="display:none">
+    <img src="pics/folk2/bombo.png">
+    <img src="pics/folk2/bombo%20chaplin.png">
+    <img src="pics/folk2/cheguebara.png">
+    <img src="pics/folk2/coyuyo.png">
+    <img src="pics/folk2/guitarra.png">
+    <img src="pics/folk2/Mate.png">
+    <img src="pics/folk2/neurona.png">
+</div>
+<div id="mariposas" style="display:none">
+    <img src="pics/mariposas/1.png">
+    <img src="pics/mariposas/2.png">
+    <img src="pics/mariposas/3.png">
+    <img src="pics/mariposas/4.png">
+    <img src="pics/mariposas/6.png">
+    <img src="pics/mariposas/7.png">
+    <img src="pics/mariposas/8.png">
+    <img src="pics/mariposas/9.png">
+    <img src="pics/mariposas/11.png">
+    <img src="pics/mariposas/12.png">
+    <img src="pics/mariposas/13.png">
+    <img src="pics/mariposas/14.png">
+    <img src="pics/mariposas/15.png">
+    <img src="pics/mariposas/16.png">
+    <img src="pics/mariposas/17.png">
+    <img src="pics/mariposas/18.png">
+    <img src="pics/mariposas/19.png">
+    <img src="pics/mariposas/20.png">
+    <img src="pics/mariposas/maripng.png">
+    <img src="pics/mariposas/maripng2.png">
+</div>
+<div id="flores" style="display:none">
+    <img src="pics/flores/2.png">
+    <img src="pics/flores/3.png">
+    <img src="pics/flores/4.png">
+    <img src="pics/flores/5.png">
+    <img src="pics/flores/6.png">
+    <img src="pics/flores/8.png">
+    <img src="pics/flores/9.png">
+    <img src="pics/flores/10.png">
+    <img src="pics/flores/11.png">
+    <img src="pics/flores/12.png">
+    <img src="pics/flores/13.png">
+    <img src="pics/flores/14.png">
+    <img src="pics/flores/16.png">
+    <img src="pics/flores/17.png">
+    <img src="pics/flores/18.png">
+    <img src="pics/flores/19.png">
+    <img src="pics/flores/20.png">
+    <img src="pics/flores/flor1.png">
+    <img src="pics/flores/florpng.png">
+</div>
+<div id="coyuyos" style="display:none">
+    <img src="pics/coyuyos/cooyuyo.png">
+    <img src="pics/coyuyos/coyuyo2.png">
+</div>
+<div id="fondos" style="display:none">
+    <img src="pics/fondos/1.jpg">
+    <img src="pics/fondos/2.jpg">
+    <img src="pics/fondos/3.jpg">
+    <img src="pics/fondos/4.jpg">
+    <img src="pics/fondos/5.jpg">
+    <img src="pics/fondos/6.jpg">
+    <img src="pics/fondos/7.jpg">
+    <img src="pics/fondos/8.jpg">
+    <img src="pics/fondos/9.jpg">
+    <img src="pics/fondos/10.jpg">
+    <img src="pics/fondos/11.jpg">
+    <img src="pics/fondos/12.jpg">
+    <img src="pics/fondos/13.jpg">
+    <img src="pics/fondos/14.jpg">
+    <img src="pics/fondos/15.png">
+    <img src="pics/fondos/16.png">
+    <img src="pics/fondos/17.png">
+</div>
+
+<script src="spectrograph.js"></script>
+<script type="text/javascript">
+    var canvas = $("#visuals")
+    var ctxVisuals = canvas.get()[0].getContext("2d");
+    var WIDTH = canvas.width()
+    var HEIGHT = canvas.height()
+    var avgFrameTime=20;
+    var avgRenderTime=20;
+    var lastFrame = Date.now();
+
+
+    var spect = new Spectrograph(24000);
+
+    var stars = document.getElementById('stars').children;
+    var instruments = document.getElementById('imgs').children;
+    var party = document.getElementById('party').children;
+    var folk = document.getElementById('folk').children;
+    var drugs = document.getElementById('drugs').children;
+    var folk2 = document.getElementById('folk2').children;
+    var mariposas = document.getElementById('mariposas').children;
+    var flores = document.getElementById('flores').children;
+    var coyuyos = document.getElementById('coyuyos').children;
+    var fondos = document.getElementById('fondos').children;
+
+    // create a gradient for the fill. Note the strange
+    // offset, since the gradient is calculated based on
+    // the canvas, not the specific element we draw
+    var gradient = ctxVisuals.createLinearGradient(0,0,0,HEIGHT);
+    gradient.addColorStop(1,'#000000');
+    gradient.addColorStop(0.75,'#ff0000');
+    gradient.addColorStop(0.05,'#ffff00');
+    gradient.addColorStop(0,'#ffffff');
+
+    var ranges = [];
+    var levels = [];
+    var sums;
+    var mins = [128,128,128,128,128]
+    var maxs = [128,128,128,128,128]
+    var mins2 = [];
+    var maxs2 = [];
+    var lastBeat;
+    var heartBeat;
+    var beatDelays = [];
+
+    var rots = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var phases = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var hues = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var xs = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var ys = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+
+    var ps = [];
+
+    var draw = true;
+    var imageBackground = false;
+    var currentImage = fondos[0];
+    var currentImageIndex = 1;
+    var bgRotate = 0;
+    var clear=true;
+    var fade=false;
+    var fadeOpacity=3/256;
+    var drawMonitor = true;
+
+    var drawSpect=false;
+    var drawRanges=false;
+    var drawLevels=false;
+    var drawSpect2=false;
+
+    var drawTheBeats2 = true;
+    var beatShape = 'square';
+    var beater = 'lissajous';
+    var maxBeats = 5;
+    var quadSize = 1;
+    var rotateSpeed = 100;
+    var phaseSpeed = 30;
+    var hueDivisor = 4;
+    var xAmp = 250;
+    var yAmp = 150;
+    var xMult = 1;
+    var yMult = 1.3;
+
+    var drawTheParticles = true;
+    var particleShape = 'stars';
+    var particleSize = 1;
+    var particleSpeed = 10;
+    var particleDivisor = 2;
+    var randomPlacement = false;
+    var minLife = 10;
+    var rotMult = 1;
+    var treshold = 0;
+
+    var gradient = ctxVisuals.createLinearGradient(0, 0, 0, HEIGHT);
+    gradient.addColorStop(1, '#000000');
+    gradient.addColorStop(0.75, '#ff0000');
+    gradient.addColorStop(0.05, '#ffff00');
+    gradient.addColorStop(0, '#ffffff');
+
+    onclick = function() {canvas[0].webkitRequestFullScreen();}
+
+    var particleShapes = {
+        squares: function (ctx, i, c) {
+            ctx.fillStyle = 'rgb(' + Math.floor(c[0]) + ','+ Math.floor(c[1]) + ','+ Math.floor(c[2]) + ')'
+            ctx.fillRect(-7.5,-7.5,15,15);
+        },
+        stars: function (ctx, i) {
+            var img = stars[i%stars.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        jazz: function (ctx, i) {
+            var img = instruments[i%instruments.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        party: function (ctx, i) {
+            var img = party[i%party.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        folk: function (ctx, i) {
+            var img = folk[i%folk.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        folk2: function (ctx, i) {
+            var img = folk2[i%folk2.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        mariposas: function (ctx, i) {
+            var img = mariposas[i%mariposas.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        flores: function (ctx, i) {
+            var img = flores[i%flores.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        coyuyos: function (ctx, i) {
+            var img = coyuyos[i%coyuyos.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        drugs: function (ctx, i) {
+            var img = drugs[i%drugs.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        },
+        all: function (ctx, i) {
+            var total = party.length + stars.length + instruments.length + folk.length + drugs.length;
+            var i2 = i%total;
+            if (i2 < party.length) {
+                var img = party[i2];
+            } else if (i2 < party.length+stars.length) {
+                var img = stars[i2-party.length];
+            } else if (i2 < party.length+stars.length+instruments.length){
+                var img = instruments[i2-party.length-stars.length];
+            } else if (i2 < party.length+stars.length+instruments.length+folk.length){
+                var img = folk[i2-party.length-stars.length-instruments.length];
+            } else {
+                var img = drugs[i2-party.length-stars.length-instruments.length-folk.length];
+            }
+            if (img===undefined) debugger;
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, -7.5*aspect, -7.5, 15*aspect, 15);
+        }
+    }
+    var beatShapes = {
+        square: function (ctx, i,x, y, intensity) {
+            ctx.fillRect(x-intensity*quadSize/2, y-intensity*quadSize/2, intensity*quadSize, intensity*quadSize);
+        },
+        jazz: function (ctx, i, x, y, intensity) {
+            //var img = Math.floor(Math.random()*instruments.length)
+            var img = instruments[i%instruments.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+            //img++;
+            //img %= 10;
+        },
+        stars: function (ctx, i, x, y, intensity) {
+            var img = stars[i%stars.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        },
+        party: function (ctx, i, x, y, intensity) {
+            var img = party[i%party.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        },
+        folk: function (ctx, i, x, y, intensity) {
+            var img = folk[i%folk.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        },
+        folk2: function (ctx, i, x, y, intensity) {
+            var img = folk2[i%folk2.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        },
+        mariposas: function (ctx, i, x, y, intensity) {
+            var img = mariposas[i%mariposas.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        },
+        flores: function (ctx, i, x, y, intensity) {
+            var img = flores[i%flores.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        },
+        coyuyos: function (ctx, i, x, y, intensity) {
+            var img = coyuyos[i%coyuyos.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        },
+        drugs: function (ctx, i, x, y, intensity) {
+            var img = drugs[i%drugs.length];
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        },
+        all: function (ctx, i, x, y, intensity) {
+            var total = party.length + stars.length + instruments.length + folk.length + drugs.length;
+            var i2 = i%total;
+            if (i2<party.length) {
+                var img = party[i2];
+            } else if (i2<party.length+stars.length) {
+                var img = stars[i2-party.length];
+            } else if (i2<party.length+stars.length+instruments.length){
+                var img = instruments[i2-party.length-stars.length];
+            } else if (i2<party.length+stars.length+instruments.length+folk.length){
+                var img = folk[i2-party.length-stars.length-instruments.length];
+            } else {
+                var img = drugs[i2-party.length-stars.length-instruments.length-folk.length];
+            }
+            var aspect = img.width/ img.height;
+            ctx.drawImage(img, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+        }
+    }
+    var beaters = {
+        lissajous: function () {
+            for (var j=0; j<rots.length; j++) {
+                var i = j%sums.length;
+                var k = Math.floor(j/sums.length);
+                rots[j] += (sums[i]-mins[i])*(rotateSpeed/10000)*(i%2*2-1);
+                phases[j] += (sums[i]-mins[i])*(phaseSpeed/10000)*(i%2*2-1);
+                //hues[i] += (sums[i]-mins[i])/hueDivisor%256;
+                hues[j] += ((sums[i]-mins[i])/(maxs[i]-mins[i]))/hueDivisor;
+                //if (i===0) console.log(hues[i])
+                //if (i===0) console.log((sums[i]-mins[i])/(maxs[i]-mins[i]))
+                //hues[i] += hueDivisor;
+                if (isNaN(hues[j])) hues[j] = 0;
+                hues[j] %= 256;
+            }
+
+            for (var i=0; i<phases.length; i++) {
+                var k = Math.floor(i/sums.length);
+                xs[i] = 400+ Math.cos(k+phases[i]*xMult)*xAmp;
+                ys[i] = 300+ Math.sin(k+phases[i]*yMult)*yAmp;
+            }
+        },
+        row: function () {
+            for (var j=0; j<rots.length; j++) {
+                var i = j%sums.length;
+                rots[j] += (sums[i]-mins[i])*(rotateSpeed/10000)*(i%2*2-1);
+                phases[j] += (sums[i]-mins[i])*(phaseSpeed/10000)*(i%2*2-1);
+                //hues[i] += (sums[i]-mins[i])/hueDivisor%256;
+                hues[j] += ((sums[i]-mins[i])/(maxs[i]-mins[i]))/hueDivisor;
+                //if (i===0) console.log(hues[i])
+                //if (i===0) console.log((sums[i]-mins[i])/(maxs[i]-mins[i]))
+                //hues[i] += hueDivisor;
+                if (isNaN(hues[j])) hues[j] = 0;
+                hues[j] %= 256;
+            }
+
+            for (var i=0; i<rots.length; i++) {
+                xs[i] = i * 192 * 4 / 5 + 128;
+                ys[i] = 128;
+            }
+        }
+    }
+    var drawParticle;
+    var drawBeat;
+    var updateBeat;
+
+    function updateData() {
+        //console.log('updated');
+        for (var i =0; i<maxBeats; i++) {
+            var color = HSVtoRGB(hues[j], 1, 1);
+            var j = i % sums.length;
+            beat = 256 * (mins[j] - sums[j]) / (maxs[j] - mins[j]);
+            if (randomPlacement) {
+                var px = Math.random() * 800;
+                var py = Math.random() * 600;
+            }
+            else {
+                var px = xs[i];
+                var py = ys[i];
+            }
+            addParticles((sums[j] - mins[j]) / particleDivisor, 800 - px, 600 - py, color);
+        }
+    }
+    function nextBackground() {
+        currentImage = fondos[currentImageIndex++];
+        currentImageIndex %= fondos.length;
+    }
+    var frameCount=0;
+    var bgRotation = 0;
+    function renderFrame() {
+        requestAnimationFrame(renderFrame);
+
+        var thisFrame = Date.now();
+        var frameTime = thisFrame-lastFrame;
+        lastFrame = thisFrame;
+        avgFrameTime = avgFrameTime*.98 + frameTime*.02;
+
+        drawParticle = particleShapes[particleShape];
+        drawBeat = beatShapes[beatShape];
+        updateBeat = beaters[beater];
+
+        if(sums) {
+            updateBeat();
+        }
+/*
+        if (frameCount%2===1) {
+            updateParticles;
+            return;
+        }
+        */
+	    if (clear || !draw) {
+            if (imageBackground) {
+                ctxVisuals.save();
+                bgRotation += bgRotate;
+                ctxVisuals.rotate(bgRotation);
+                ctxVisuals.drawImage(currentImage, 0, 0, 800, 600);
+                ctxVisuals.restore();
+            }
+            else {
+                ctxVisuals.clearRect(0, 0, 800, 600);
+            }
+        }
+	    if (fade && !clear) {
+            if (imageBackground) {
+                ctxVisuals.globalAlpha = fadeOpacity;
+                ctxVisuals.drawImage(currentImage, 0, 0, 800, 600);
+                ctxVisuals.globalAlpha = 1;
+            }
+            else {
+                ctxVisuals.fillStyle='rgba(0,0,0,'+fadeOpacity+')';
+                ctxVisuals.fillRect(0, 0, 800, 600);
+            }
+        }
+
+        // dibujar espectrografo
+        if (drawSpect) {
+            ctxVisuals.fillStyle = gradient;
+            spect.drawSpectrum(ctxVisuals, levels);
+        }
+
+        // dibujar bandas
+        if (drawRanges) {
+            ctxVisuals.strokeStyle = 'green'
+            spect.drawRanges(ctxVisuals, ranges);
+        }
+
+        // dibujar niveles actuales
+        if (drawLevels) {
+            ctxVisuals.strokeStyle = '#0F0';
+            ctxVisuals.lineWidth = 2.0;
+            spect.drawLevels(ctxVisuals, ranges, sums);
+
+            // dibujar niveles maximos y minimos
+            ctxVisuals.strokeStyle = 'yellow';
+            ctxVisuals.lineWidth = 1.0;
+            spect.drawLevels(ctxVisuals, ranges, mins);
+            spect.drawLevels(ctxVisuals, ranges, maxs);
+        }
+
+        // dibujar espectrografo
+        if (drawSpect2) {
+            //ctxVisuals.fillStyle = gradient;
+            //ctxVisuals.globalAlpha = 1;
+            spect.drawSpectrum3(ctxVisuals, levels, mins2, maxs2);
+        }
+
+        /*
+        /// temp
+        var xx = frameCount % WIDTH;
+        ctxVisuals.fillStyle = 'yellow';
+        ctxVisuals.fillRect(xx, HEIGHT-heartBeat, 1, heartBeat);
+
+        if (heartBeat-lastBeat > opener.sustains.sensibility) {
+            ctxVisuals.fillStyle = 'red';
+            ctxVisuals.fillRect(xx+0.5, HEIGHT+0.5-256, 1, 256);
+        }
+
+        ctxVisuals.fillStyle = 'yellow';
+        for (var delay in beatDelays) {
+            var bd = beatDelays[delay];
+            ctxVisuals.fillRect(delay, HEIGHT+0.5-bd, 1, bd);
+        }
+         /// end temp
+*/
+
+        //drawBeats(ctxVisuals, sums);
+        drawBeats2(ctxVisuals, sums);
+        //cleanParticles();
+        if (drawTheParticles) {drawParticles(ctxVisuals);}
+
+        updateParticles();
+
+        if (drawMonitor) {
+            opener.updateMonitor(canvas.get()[0]);
+        }
+        if(!draw) {
+            //requestAnimationFrame(renderFrame);
+            ctxVisuals.clearRect(0, 0, 800, 600);
+            //updateParticles();
+        }
+
+        avgRenderTime = avgRenderTime*.9 + (Date.now() -thisFrame)*0.1;
+        opener.tiempoPintado = Math.round(avgRenderTime,1)+'ms';
+        opener.particulas = ps.length;
+        frameCount++;
+    }
+    function updateParticles() {
+        for (var i = 0; i<ps.length; i++) {
+            ps[i].l -= 1;
+            ps[i].x += ps[i].vx
+            ps[i].y += ps[i].vy
+            ps[i].c[0]*=0.99
+            ps[i].c[1]*=0.98
+            ps[i].c[2]*=0.96
+        }
+    }
+	var stari=0;
+    var sin = Math.sin, cos = Math.cos;
+    function drawParticles(ctx) {
+        for (var i = 0; i<ps.length; i++) {
+            var p = ps[i]
+            var pl = p.l;
+            if (pl<0) continue;
+            var pSize = particleSize*pl/p.m;
+            //var pr = (Math.PI*2*pl/p.m + p.r);
+            var pr = (p.m-pl)* p.r;
+            var r = pSize;
+            var as = sin(pr)*r,
+                ac = cos(pr)*r;
+            ctx.setTransform(ac, as, -as, ac, p.x, p.y);
+            drawParticle(ctx, i, p.c);
+        }
+        ctx.resetTransform();
+
+	stari++;
+	stari %= 4;
+    }
+    function cleanParticles() {
+        var ps2 = [];
+        for (var i = 0; i<ps.length; i++) {
+            if (ps[i].l >=0) {
+                ps2.push(ps[i]);
+            }
+        }
+        ps = ps2;
+    }
+    setInterval(cleanParticles,200)
+    function addParticles(level,x,y,c) {
+        var l2 = Math.max(0, level - treshold);
+        var amount = (l2*l2/100);
+        while(amount>0 && ps.length<1200) {
+            var a = Math.random()*Math.PI*2
+            var v = Math.random()*level/10
+
+            ps.push({
+                x:x,
+                y:y,
+                l:50*level/256*1+minLife,
+                m:50*level/256*1+minLife,
+                vx:particleSpeed*Math.cos(a)*v,
+                vy:particleSpeed*Math.sin(a)*v,
+                c:c,
+                //r:Math.random()*Math.PI*4-Math.PI*2*rotMult
+                r:(Math.random()*2-1)*rotMult
+            })
+            amount--;
+        }
+    }
+
+    function drawBeats2(ctx, beats) {
+        if (!beats) return;
+        maxBeats = Math.round(maxBeats);
+        for (var i =0; i<maxBeats; i++) {
+            var color = HSVtoRGB(hues[j],1,1);
+            var j = i%beats.length;
+            beat = 256*(mins[j]-beats[j])/(maxs[j]-mins[j]);
+            if (drawTheBeats2) {
+                ctx.save();
+                ctx.fillStyle = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+                ctx.translate(xs[i], ys[i]);
+                ctx.rotate(rots[i]);
+                drawBeat(ctx, i, 0, 0, beat * 3 / 4 * 4 / 5);
+                ctx.restore();
+            }
+        }
+    }
+
+    function HSVtoRGB(h, s, v) {
+        var r, g, b, i, f, p, q, t;
+        if (h && s === undefined && v === undefined) {
+            s = h.s, v = h.v, h = h.h;
+        }
+        i = Math.floor(h * 6);
+        f = h * 6 - i;
+        p = v * (1 - s);
+        q = v * (1 - f * s);
+        t = v * (1 - (1 - f) * s);
+        switch (i % 6) {
+            case 0: r = v, g = t, b = p; break;
+            case 1: r = q, g = v, b = p; break;
+            case 2: r = p, g = v, b = t; break;
+            case 3: r = p, g = q, b = v; break;
+            case 4: r = t, g = p, b = v; break;
+            case 5: r = v, g = p, b = q; break;
+        }
+        return [ Math.floor(r * 255), Math.floor(g * 255), Math.floor(b * 255) ];
+    }
+
+    function addTree() {
+
+    }
+
+    function paintTree() {
+
+    }
+    function drawLevels2(ctx, levels) {
+        if (!levels) return;
+        for ( var i =0; i < levels.length; i++) {
+            ctx.save();
+            var color = HSVtoRGB(hues[i],1,1)
+              ctx.translate(i*192*4/5+128, 128)
+            //ctx.translate(800-xs[i], 600-ys[i])
+            ctx.rotate(rots[rots.length-1-i]*-1);
+            drawLevel(ctx, 0, 0, levels[i]*3/4*4/5);
+            ctx.restore();
+        }
+    }
+    var img = 0;
+    /*
+    function drawBeat(ctx, x,y, intensity) {
+        if (squareBeats) {
+            ctx.fillRect(x-intensity*quadSize/2, y-intensity*quadSize/2, intensity*quadSize, intensity*quadSize);
+        }
+        else {
+         //var img = Math.floor(Math.random()*instruments.length)
+            var i = instruments[img]
+            var aspect = i.width/ i.height;
+            ctx.drawImage(i, x-intensity*quadSize*aspect/2, y-intensity*quadSize/2, intensity*quadSize*aspect, intensity*quadSize);
+            img++;
+            img %= 10;
+        }
+    }*/
+    function drawLevel(ctx, x,y, intensity) {
+        ctx.strokeRect(x-intensity/2, y-intensity/2, intensity, intensity);
+    }
+    renderFrame();
+
+    opener.start();
+</script>
+
+</body>
+</html>

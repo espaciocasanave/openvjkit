@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Controladora</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background: black;
+            color: white;
+        }
+
+        canvas {
+            background: black;
+            position: absolute;
+        }
+        #monitor {
+            top:128px;
+        }
+    </style>
+</head>
+<body>
+<div id="errors"></div>
+<canvas id="spect" width="256" height="128" style="display: block;"></canvas>
+<canvas id="monitor" width="256" height="192"></canvas>
+
+<script type="text/javascript" src="jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src='dat.gui.min.js'></script>
+<script src="spectrograph.js"></script>
+<script type="text/javascript">
+    var COUNT = 64;
+    var sustains = {
+        min: 0.004,
+        max: 0.02,
+        minBPM: 75,
+        bpmResolution: 14,
+        sensibility:12
+    };
+    var limits = [0, 1200, 4000, 7000, 13000, 24000];
+    var SCALE = 24000 / (COUNT / 2);
+
+    function installKeyboardHandler() {
+        window.onkeydown = function () {
+            console.log(event.keyCode);
+            switch (event.keyCode) {
+                case 49:
+                    renderer.squareBeats = !renderer.squareBeats;
+                    break;
+                case 50:
+                    renderer.squareParticles = !renderer.squareParticles;
+                    break;
+                case 51:
+                    renderer.fixedBeats = !renderer.fixedBeats;
+                    break;
+                case 88:
+                    renderer.draw = !renderer.draw;
+                    break;
+                case 90:
+                    renderer.clear = !renderer.clear;
+                    break;
+                case 65:
+                    renderer.fade = !renderer.fade;
+                    break;
+                case 67:
+                    setTimeout(function () {ctxMonitor.clearRect(0,0,256,192);}, 100);
+                    renderer.drawMonitor = !renderer.drawMonitor;
+                    break;
+                case 220:
+                    beatDelays = [];
+                    break;
+                case 32:
+                    renderer.nextBackground();
+                    break;
+            }
+        };
+    }
+    function createAudioProcessor() {
+        renderer = window.open("renderer.html", "Ratting", "width=550,height=170,0,status=0,");
+    }
+    var midiAccess;
+    function onMIDIInit (midi) {
+        midiAccess = midi;
+        for (var input of midi.inputs.values()) {
+            input.onmidimessage = midiMessageReceived;
+
+        }
+    }
+    function onMIDISystemError ( midi ) {
+        console.log('MIDI error!');
+    }
+    function midiMessageReceived ( ev ) {
+        var cmd = ev.data[0] >> 4;
+        var channel = ev.data[0] & 0xf;
+        var noteNumber = ev.data[1];
+        var velocity = 0;
+        if (ev.data.length > 2)
+            velocity = ev.data[2];
+
+        //{
+        // console.log(cmd+', '+channel+', '+noteNumber+', '+velocity);
+
+        if (cmd === 11 && channel === 0) {
+            switch (noteNumber) {
+                case 1:
+                    renderer.treshold = Math.round(velocity*40/127);
+                    break;
+                case 2:
+                    renderer.particleDivisor = Math.round(velocity*80/127)/10;
+                    break;
+                case 3:
+                    renderer.particleSize = Math.round(velocity*200/127)/10;
+                    break;
+                case 4:
+                    renderer.particleSpeed = Math.round(velocity*400/127)/10;
+                    break;
+                case 5:
+                    renderer.minLife = Math.round(velocity*200/127);
+                    break;
+                case 6:
+                    renderer.rotMult = Math.round(velocity*20/127)/10;
+                    break;
+                case 7:
+                    renderer.xMult = Math.round(velocity*100/127)/10;
+                    break;
+                case 8:
+                    renderer.yMult = Math.round(velocity*100/127)/10;
+                    break;
+            }
+        } else if (cmd === 9) {
+            switch (noteNumber) {
+                case 0:
+                    renderer.particleShape = 'squares';
+                    break;
+                case 49:
+                    renderer.particleShape = 'stars';
+                    break;
+                case 50:
+                    renderer.particleShape = 'folk2';
+                    break;
+                case 51:
+                    renderer.particleShape = 'flores';
+                    break;
+                case 45:
+                    renderer.particleShape = 'coyuyos';
+                    break;
+                case 44:
+                    renderer.particleShape = 'mariposas';
+                    break;
+                case 46:
+                    renderer.particleShape = 'party';
+                    break;
+                case 47:
+                    renderer.particleShape = 'jazz';
+                    break;
+                case 36:
+                    renderer.beatShape = 'square';
+                    break;
+                case 37:
+                    renderer.beatShape = 'stars';
+                    break;
+                case 38:
+                    renderer.beatShape = 'folk2';
+                    break;
+                case 39:
+                    renderer.beatShape = 'flores';
+                    break;
+                case 32:
+                    renderer.beatShape = 'coyuyos';
+                    break;
+                case 33:
+                    renderer.beatShape = 'mariposas';
+                    break;
+                case 34:
+                    renderer.beatShape = 'party';
+                    break;
+                case 35:
+                    renderer.beatShape = 'jazz';
+                    break;
+                case 62:
+                    renderer.draw = !renderer.draw;
+                    break;
+                case 64:
+                    renderer.clear= !renderer.clear;
+                    break;
+                case 65:
+                    renderer.fade = !renderer.fade;
+                    break;
+                case 67:
+                    renderer.drawMonitor = !renderer.drawMonitor;
+                    break;
+                case 69:
+                    renderer.drawSpect = !renderer.drawSpect;
+                    break;
+                case 71:
+                    renderer.drawRanges = !renderer.drawRanges;
+                    break;
+                case 72:
+                    renderer.drawLevels = !renderer.drawLevels;
+                    break;
+                case 74:
+                    renderer.drawTheBeats2 = !renderer.drawTheBeats2;
+                    break;
+                case 76:
+                    renderer.drawTheParticles = !renderer.drawTheParticles;
+                    break;
+                case 77:
+                    renderer.randomPlacement = !renderer.randomPlacement;
+                    break;
+            }
+        }
+    }
+
+    var started = false;
+    function start () {
+        if (started)
+            return;
+
+        started = true;
+        navigator.getUserMedia({audio: true},
+                function (stream) {
+                    sourceNode = context.createMediaStreamSource(stream);
+
+                    //sourceNode.connect(gain_node); // comment out to disconnect output speakers
+                    setupAudioNodes(sourceNode);
+                    //gain_node = context.createGain();
+                    //gain_node.connect( context.destination );
+                    //gain_node.gain.value = 0;
+                    createGUI();
+                    navigator.requestMIDIAccess().then(
+                            onMIDIInit,
+                            onMIDISystemError);
+                },
+                function (e) {
+                    alert('Error capturing audio.');
+                }
+        );
+    }
+    function createGUI() {
+        var gui = new dat.GUI();
+        gui.useLocalStorage = true;
+        gui.remember(analyser);
+        gui.remember(sustains);
+        gui.remember(renderer);
+        var f1 = gui.addFolder('Analisis de Audio');
+        f1.add(analyser, 'smoothingTimeConstant', 0, 1, 0.01);
+        f1.add(analyser, 'maxDecibels', -100, 0, 1);
+        f1.add(analyser, 'minDecibels', -100, 0, 1);
+        f1.add(sustains, 'max', 0, 0.02, 0.0001);
+        f1.add(sustains, 'min', 0, 0.02, 0.0001);
+        f1.add(sustains, 'sensibility', 1, 127, 1);
+        f1.add(sustains, 'minBPM', 50, 100, 1);
+        f1.add(sustains, 'bpmResolution', 1, 50, 1);
+        var f2 = gui.addFolder('Global');
+        f2.add(renderer, 'draw').listen();
+        f2.add(renderer, 'imageBackground').listen();
+        f2.add(renderer, 'currentImageIndex', 0, renderer.fondos.length-1, 1).onChange(function(value) {
+            renderer.currentImageIndex = Math.floor(renderer.currentImageIndex);
+            renderer.currentImage = renderer.fondos[renderer.currentImageIndex];
+        });
+        //f2.add(renderer, 'bgRotate', 0, 1, 1 / 256);
+        f2.add(renderer, 'clear').listen();
+        f2.add(renderer, 'fade').listen();
+        f2.add(renderer, 'fadeOpacity', 0, 1, 1 / 256);
+        f2.add(renderer, 'drawMonitor').listen();
+        var f5 = gui.addFolder('Espectrografo');
+        f5.add(renderer, 'drawSpect').listen();
+        f5.add(renderer, 'drawRanges').listen();
+        f5.add(renderer, 'drawLevels').listen();
+        f5.add(renderer, 'drawSpect2').listen();
+        var f3 = gui.addFolder('Bandas');
+        f3.add(renderer, 'drawTheBeats2').listen();
+        f3.add(renderer, 'beatShape', ['square', 'jazz', 'stars', 'party' , 'folk', 'folk2', 'mariposas', 'flores', 'coyuyos', 'drugs', 'all']).listen();
+        f3.add(renderer, 'beater', ['lissajous', 'row']);
+        f3.add(renderer, 'maxBeats', 0, 20, 1);
+        f3.add(renderer, 'quadSize', 0, 10);
+        f3.add(renderer, 'xMult', 0, 10, 0.01).listen();
+        f3.add(renderer, 'yMult', 0, 10, 0.01).listen();
+        f3.add(renderer, 'xAmp', 0, 400, 1);
+        f3.add(renderer, 'yAmp', 0, 300, 1);
+        f3.add(renderer, 'phaseSpeed', 0, 100, 1);
+        f3.add(renderer, 'rotateSpeed', 0, 300, 1);
+        f3.add(renderer, 'hueDivisor', 1, 64, 1);
+        var f4 = gui.addFolder('Particulas');
+        f4.add(renderer, 'drawTheParticles').listen();
+        f4.add(renderer, 'particleShape', ['squares', 'jazz', 'stars', 'party' , 'folk', 'folk2', 'mariposas', 'flores', 'coyuyos', 'drugs', 'all']);
+        f4.add(renderer, 'treshold', 0, 40, 1).listen();
+        f4.add(renderer, 'particleDivisor', 1, 8, 1).listen();
+        f4.add(renderer, 'particleSize', 0, 20).listen();
+        f4.add(renderer, 'particleSpeed', 0, 40, 0.1).listen();
+        f4.add(renderer, 'minLife', 0, 200, 1).listen();
+        f4.add(renderer, 'rotMult', 0, 2, 0.01).listen();
+        f4.add(renderer, 'randomPlacement').listen();
+
+        //$('select').select2();
+    }
+    function detectBeats(spect, ranges) {
+        var sums = [];
+        for (var i = 0; i < ranges.length; i++) {
+            sums.push(compileRange(spect, ranges[i]))
+        }
+        return sums;
+    }
+    function compileRange(spect, range) {
+        low = Math.ceil(range.low / SCALE);
+        high = Math.floor(range.high / SCALE);
+        var sum = 0;
+        for (var i = low; i < high; i++) {
+            sum += spect[i];
+        }
+        return sum / (high - low);
+    }
+
+    function playSound(buffer) {
+        sourceNode.buffer = buffer;
+        sourceNode.start(0);
+    }
+    function onError(e) {
+        console.log(e);
+    }
+
+    function setupAudioNodes(sourceNode) {
+        // setup a javascript node
+        javascriptNode = context.createScriptProcessor(256, 2, 2);
+        var avgFrameTime = 20;
+        var avgRenderTime = 20;
+        var lastFrame = Date.now();
+        // when the javascript node is called
+        // we use information from the analyzer node
+        // to draw the volume
+        javascriptNode.onaudioprocess = function (ape) {
+            var thisFrame = Date.now();
+            var frameTime = thisFrame - lastFrame;
+            lastFrame = thisFrame;
+            avgFrameTime = avgFrameTime * .98 + frameTime * .02
+
+            // get the average for the first channel
+            analyser.getByteFrequencyData(array);
+
+            // procesar frecuencias
+            var sums = detectBeats(array, ranges);
+            var beats = sums;
+            var smin = sustains.min;
+            var smax = sustains.max;
+            for (var i = 0; i < beats.length; i++) {
+                beat = 256 * (mins[i] - beats[i]) / (maxs[i] - mins[i]);
+                if (beats[i] < mins[i])
+                    mins[i] = beats[i];
+                if (beats[i] > maxs[i])
+                    maxs[i] = beats[i];
+                mins[i] += (maxs[i] - mins[i]) * smin;
+                maxs[i] -= (maxs[i] - mins[i]) * smax;
+            }
+            beat = 0
+            var beatSum = 0;
+            for (var i = 0; i < array.length; i++) {
+                if (array[i] < mins2[i])
+                    mins2[i] = array[i];
+                if (array[i] > maxs2[i])
+                    maxs2[i] = array[i];
+                mins2[i] += (maxs2[i] - mins2[i]) * smin;
+                maxs2[i] -= (maxs2[i] - mins2[i]) * smax;
+                beat = 256 * (mins2[i] - array[i]) / (maxs2[i] - mins2[i]);
+                beatSum += beat*beat;
+            }
+            // aqui comuinicarse con la ventana
+            renderer.ranges = ranges;
+            renderer.levels = array;
+            renderer.sums = sums;
+            renderer.mins = mins;
+            renderer.maxs = maxs;
+            renderer.mins2 = mins2;
+            renderer.maxs2 = maxs2;
+            renderer.lastBeat = renderer.heartBeat;
+            renderer.heartBeat = Math.sqrt(beatSum/array.length);
+            if (renderer.heartBeat-renderer.lastBeat > sustains.sensibility) {
+                var pn = performance.now()
+                var beatDelay = pn - lastBeatTime;
+                lastBeatTime = pn;
+                var minDelay = 1000/(sustains.minBPM/60);
+                if (beatDelay>minDelay/8) {
+                    while (beatDelay<minDelay/2) {
+                        beatDelay *= 2;
+                    }
+                    while (beatDelay>minDelay) {
+                        beatDelay /= 2;
+                    }
+                    beatDelay = Math.round(beatDelay/sustains.bpmResolution);
+                    if (!beatDelays[beatDelay])
+                        beatDelays[beatDelay] = 0;
+                    beatDelays[beatDelay] += renderer.heartBeat-renderer.lastBeat;
+                    //beatDelays[beatDelay] ++;
+                }
+            }
+            renderer.beatDelays = beatDelays;
+            renderer.updateData();
+
+            var maxEnergy = 0;
+            var bestCandidate = 0;
+            for (var delay in beatDelays) {
+                var bd = beatDelays[delay];
+                if (bd>maxEnergy) {
+                    maxEnergy = bd;
+                    var bestCandidate = delay*sustains.bpmResolution;
+                }
+            }
+            var bpm = Math.round(60/(bestCandidate/1000));
+
+            // borrar canvas del espectrografo
+            ctxSpect.clearRect(0, 0, WIDTH, HEIGHT);
+
+            // dibujar espectrografo
+            ctxSpect.fillStyle = gradient;
+            spect.drawSpectrum(ctxSpect, array);
+
+            // dibujar bandas
+            ctxSpect.strokeStyle = 'green'
+            spect.drawRanges(ctxSpect, ranges);
+
+            // dibujar niveles actuales
+            ctxSpect.strokeStyle = '#0F0';
+            ctxSpect.lineWidth = 2.0;
+            spect.drawLevels(ctxSpect, ranges, sums);
+
+            // dibujar niveles maximos y minimos
+            ctxSpect.strokeStyle = 'yellow';
+            ctxSpect.lineWidth = 1.0;
+            spect.drawLevels(ctxSpect, ranges, mins);
+            spect.drawLevels(ctxSpect, ranges, maxs);
+
+            // dibujar tiempos
+            ctxSpect.fillStyle = 'white';
+            ctxSpect.fillText('entre cuadros: '+Math.ceil(avgFrameTime) + 'ms', 20, 20);
+            avgRenderTime = avgRenderTime * .98 + (Date.now() - thisFrame) * 0.02;
+            ctxSpect.fillText('procesamiento: ' + Math.round(avgRenderTime, 1) + 'ms', 20, 30);
+            ctxSpect.fillText('render: '+tiempoPintado, 20,40);
+            ctxSpect.fillText('particulas: '+particulas, 20,50);
+            ctxSpect.fillText('bpm: '+bpm, 20,60);
+        };
+        // connect to destination, else it isn't called
+        javascriptNode.connect(context.destination);
+        // setup a analyzer
+        analyser = context.createAnalyser();
+        analyser.smoothingTimeConstant = 0.8;
+        analyser.fftSize = COUNT;
+        var array = new Uint8Array(analyser.frequencyBinCount);
+
+        // create a buffer source node
+        sourceNode.connect(analyser);
+        analyser.connect(javascriptNode);
+
+        //sourceNode.connect(context.destination);
+    }
+    // load the specified sound
+    function loadSound(url) {
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.responseType = 'arraybuffer';
+
+        // When loaded decode the data
+        request.onload = function () {
+
+            // decode the data
+            context.decodeAudioData(request.response, function (buffer) {
+                // when the audio is decoded play the sound
+                playSound(buffer);
+            }, onError);
+        }
+        request.send();
+    }
+
+    function updateMonitor(canvas) {
+        ctxMonitor.clearRect(0,0,256,192);
+        ctxMonitor.drawImage(canvas, 0, 0, 256, 192);
+    }
+    var errors = $("#errors")
+    var noErrors = true;
+    // crear el procesador de audio
+    if (!window.AudioContext) {
+        if (!window.webkitAudioContext) {
+            errors.html(errors.html() + '<p>no AudioContext found</p>');
+            noErrors = false;
+        } else {
+            window.AudioContext = window.webkitAudioContext;
+        }
+    }
+    if (!navigator.getUserMedia) {
+        if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
+            errors.html(errors.html() + '<p>no UserMedia found</p>');
+            noErrors = false;
+        } else {
+            navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        }
+    }
+    if (!navigator.requestMIDIAccess) {
+        //errors.html(errors.html() + '<p>no MIDI access found</p>');
+        //noErrors = false;
+    }
+
+    if (noErrors) {
+        var lastBeatTime = 0;
+        var ranges = [];
+        var mins = [];
+        var maxs = [];
+        var mins2 = [];
+        var maxs2 = [];
+        for (var i = 0; i < limits.length-1; i++)
+            ranges.push({low:limits[i], high:limits[i+1]});
+        for (var i = 0; i < ranges.length; i++)
+            mins[i] = maxs[i] = 128;
+        for (var i = 0; i < COUNT/2; i++)
+            mins2[i] = maxs2[i] = 128;
+        var beatDelays = [];
+
+        var spect = new Spectrograph(24000);
+        var context = new AudioContext();
+        var audioBuffer;
+        var sourceNode;
+        var analyser;
+        var javascriptNode;
+
+        // preparar el lienzo para pintar
+        var canvas = $("#spect");
+        var ctxSpect = canvas.get()[0].getContext("2d");
+        var WIDTH = canvas.width();
+        var HEIGHT = canvas.height();
+        var monitor = $('#monitor');
+        var ctxMonitor = monitor.get()[0].getContext('2d');
+
+
+        var particulas=0;
+        var tiempoPintado='0ms';
+        var renderer;
+
+        var gradient = ctxSpect.createLinearGradient(0, 0, 0, HEIGHT);
+        gradient.addColorStop(1, '#000000');
+        gradient.addColorStop(0.75, '#ff0000');
+        gradient.addColorStop(0.05, '#ffff00');
+        gradient.addColorStop(0, '#ffffff');
+
+        createAudioProcessor();
+        installKeyboardHandler();
+    }
+
+</script>
+
+</body>
+</html>
